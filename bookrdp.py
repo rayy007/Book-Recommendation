@@ -14,7 +14,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 # ------------------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("D:/Data science April2025/Book_recommendProject2/generalized_books_dataset.csv")
+   df = pd.read_csv("generalized_books_dataset.csv")
+   df.to_parquet("generalized_books_dataset.parquet", engine="pyarrow", index=False)
 
     df = df.dropna(subset=["user_id", "book_id", "rating"])
     df["user_id"] = df["user_id"].astype(str)
@@ -189,3 +190,4 @@ if st.button("Recommend"):
 
     st.subheader("Recommended Books:")
     st.dataframe(recs)
+
