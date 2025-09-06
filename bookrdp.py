@@ -15,13 +15,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 @st.cache_data
 def load_data():
    df = pd.read_parquet("generalized_books_dataset.parquet")
+   df = df.dropna(subset=["user_id", "book_id", "rating"])
+   df["user_id"] = df["user_id"].astype(str)
+   df["book_id"] = df["book_id"].astype(str)
+   df["rating"] = df["rating"].astype(float)
 
-    df = df.dropna(subset=["user_id", "book_id", "rating"])
-    df["user_id"] = df["user_id"].astype(str)
-    df["book_id"] = df["book_id"].astype(str)
-    df["rating"] = df["rating"].astype(float)
-
-    return df
+   return df
+    
 
 df = load_data()
 
@@ -189,5 +189,6 @@ if st.button("Recommend"):
 
     st.subheader("Recommended Books:")
     st.dataframe(recs)
+
 
 
